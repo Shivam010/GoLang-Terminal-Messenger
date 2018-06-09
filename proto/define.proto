@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package proto;
+
+service chatter{
+    // registers the user entering the server room
+    rpc enter (str) returns (str) {}
+    // sends message text to the server
+    rpc send (text) returns (ack) {}
+    // gets/receives message from the server
+    rpc receive (str) returns (text) {}
+}
+
+// user sending the message
+// text message (mess) and sended to (to)
+message text{
+    message mail{
+        string from = 1;
+        string to = 2;
+        string mess = 3;
+    }
+    mail msg = 1;
+}
+
+// string notifier
+message str{
+    string noti = 1;
+}
+
+// acknowledgment of the message
+message ack{
+    bool done = 1;
+}
