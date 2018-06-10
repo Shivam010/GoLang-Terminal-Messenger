@@ -48,6 +48,7 @@ func main() {
 		log.Fatalf("Port is not listening: %v", err)
 	}
 	defer lis.Close()
+	log.Println("Server Started at port :8080")
 	s := grpc.NewServer()
 	pb.RegisterChatterServer(s, &server{})
 	err = s.Serve(lis)

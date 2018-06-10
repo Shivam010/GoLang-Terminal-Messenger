@@ -15,9 +15,9 @@ func input(ctx context.Context, usr string, c pb.ChatterClient) {
 			ms string
 			to string
 		)
-		fmt.Println("Send Message To: ")
+		fmt.Printf("Send Message To: ")
 		fmt.Scanln(&to)
-		fmt.Println("Enter Message: ")
+		fmt.Printf("Enter Message: ")
 		fmt.Scanln(&ms)
 		msg := &pb.Text{Msg: &pb.TextMail{From: usr, To: to, Mess: ms}}
 		c.Send(ctx, msg)
@@ -25,7 +25,7 @@ func input(ctx context.Context, usr string, c pb.ChatterClient) {
 }
 
 func main() {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithInsecure())
+	conn, err := grpc.Dial("127.0.0.1:8080", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Connection Not established: %v", err)
 	}
@@ -49,10 +49,10 @@ func main() {
 		}
 		er := &pb.Str{Noti: "USER ALREADY EXIST"}
 		if r.Noti == er.Noti {
-			log.Println("Could not connect:", er.Noti)
+			fmt.Println("Could not connect:", er.Noti)
 			continue
 		}
-		fmt.Println(r.Noti)
+		fmt.Println("\t\t\t\t", r.Noti)
 		break
 	}
 
@@ -60,7 +60,7 @@ func main() {
 	for {
 		txt, err := c.Receive(ctx, &pb.Str{Noti: usr})
 		if err == nil && txt.Msg.From != "" {
-			fmt.Println("\t\t\t\tFrom:", txt.Msg.From, "To:", txt.Msg.To, "Mess:", txt.Msg.Mess)
+			fmt.Println("\n\t\t\t\tFrom:", txt.Msg.From, "To:", txt.Msg.To, "Mess:", txt.Msg.Mess)
 		}
 	}
 }
