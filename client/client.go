@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-// input takes in the input sending message from the client and is called using a sub-rountine
+// input takes in the input sending message from the client and is called using a sub-routine
 func input(ctx context.Context, usr string, c pb.ChatterClient) {
 	// Sender's loop, to send the message to another client
 	for {
