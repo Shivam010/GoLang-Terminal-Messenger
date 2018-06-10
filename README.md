@@ -6,6 +6,8 @@ It involves the use of the gRPC Remote Procedure Call system, developed by Googl
 
 And because of the use of gRPC and Protocol Buffers, one can build the project using the proto file `proto/define.proto` which makes it a cross-platform messaging application.
 
+It uses TCP and HTTP/2 Network Protocol for transport.
+
 Refer [gRPC](https://grpc.io/docs/) and [protobuf](https://developers.google.com/protocol-buffers/) for more understanding
 
 Project Directories
