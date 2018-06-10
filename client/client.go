@@ -9,7 +9,9 @@ import (
 	"google.golang.org/grpc"
 )
 
+// input takes in the input sending message from the client and is called using a sub-rountine
 func input(ctx context.Context, usr string, c pb.ChatterClient) {
+	// Sender's loop, to send the message to another client
 	for {
 		var (
 			ms string
@@ -25,17 +27,20 @@ func input(ctx context.Context, usr string, c pb.ChatterClient) {
 }
 
 func main() {
+	// setting up connection
 	conn, err := grpc.Dial("127.0.0.1:8080", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Connection Not established: %v", err)
 	}
 	defer conn.Close()
-	// creating the server instance
+
+	// making connection with the grpc protocol buffer
 	c := pb.NewChatterClient(conn)
 
 	ctx := context.Background()
-
 	var usr string
+
+	// registering username to the server
 	for {
 		fmt.Printf("Enter Username: ")
 		fmt.Scanln(&usr)
@@ -56,7 +61,10 @@ func main() {
 		break
 	}
 
+	// sub-routine for taking the input message from client
 	go input(ctx, usr, c)
+
+	// Receiver's loop, to receive the message sent to client
 	for {
 		txt, err := c.Receive(ctx, &pb.Str{Noti: usr})
 		if err == nil && txt.Msg.From != "" {
